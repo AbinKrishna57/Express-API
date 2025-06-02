@@ -20,5 +20,20 @@ up_router.get("/update", (req, res)=>{
   res.render("update")
 })
 
+up_router.post("/update/update-user", (req, res)=>{
+  const {id, col_name, val}=req.body
+  const col_names=["First_Name", "Last_Name", "Phone_Number", "Address"]
+  if(!col_names.includes(col_name)){
+    console.error("Invalid Column Name")
+  }
+  const up_sql_query=`UPDATE test SET ${col_name}=? WHERE ID=?`
+  db.query(up_sql_query, [val, id], (err, result)=>{
+    if(err){
+      console.error("there was an error", err)
+    }
+    res.redirect("/data")
+  })
+})
+
 
 module.exports=up_router
