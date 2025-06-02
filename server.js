@@ -47,10 +47,10 @@ app.get("/add", (req, res)=>{
 })
 
 app.post("/new-user", (req, res)=>{
-  const {fname, lname, phn, addr}=req.body
+  const {fname, lname, phn, addr, email}=req.body
 
-  const sql_query=("INSERT INTO test(First_Name, Last_Name, Phone_Number, Address) VALUES (?, ?, ?, ?)")
-  db.query(sql_query, [fname, lname, phn, addr], (err, result)=>{
+  const sql_query=("INSERT INTO test(First_Name, Last_Name, Phone_Number, Address, email) VALUES (?, ?, ?, ?, ?)")
+  db.query(sql_query, [fname, lname, phn, addr, email], (err, result)=>{
     if(err){
       console.error("There was an error", err)
     }
