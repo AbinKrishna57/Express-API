@@ -1,6 +1,6 @@
 const express = require("express")
 const mysql=require("mysql2")
-const router = express.Router()
+const del_router = express.Router()
 
 const db=mysql.createConnection({
   host: 'localhost',
@@ -13,14 +13,14 @@ db.connect((err)=>{
   if(err){
     console.error("Connection Error", err)
   }
-  console.log("Connected To the Server through router")
+  console.log("Connected To the Server through del_router")
 })
 
-router.get("/delete", (req, res)=>{
+del_router.get("/delete", (req, res)=>{
   res.render("delete")
 })
 
-router.post("/delete/delete-user", (req, res)=>{
+del_router.post("/delete/delete-user", (req, res)=>{
   const userid=req.body.id
   const sql_del_query="DELETE FROM test WHERE ID=?"
   db.query(sql_del_query, [userid], (err, result)=>{
@@ -31,4 +31,4 @@ router.post("/delete/delete-user", (req, res)=>{
   })
 })
 
-module.exports=router
+module.exports=del_router
