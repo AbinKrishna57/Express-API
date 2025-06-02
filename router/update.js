@@ -5,7 +5,7 @@ const up_router=express.Router()
 const db=mysql.createConnection({
   host: 'localhost',
   user: "root",
-  password: "<password>",
+  password: "Server###Beast69#",
   database: "Exp"
 })
 
