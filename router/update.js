@@ -11,7 +11,7 @@ const db=mysql.createConnection({
 
 db.connect((err)=>{
   if(err){
-    console.error("Connection Error", err)
+    return res.status(500).send("Cannot connect to the database")
   }
   console.log("Connected To the Server through update_router")
 })
@@ -24,10 +24,15 @@ up_router.post("/update/update-user", (req, res)=>{
   const {id, col_name, val}=req.body
   const col_names=["First_Name", "Last_Name", "Phone_Number", "Address", "email"]
   if(!col_names.includes(col_name)){
-    console.error("Invalid Column Name")
+    return res.status(500).send('Invalid Column Name');
+  }
+  const pattern=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if(col_name==="email" && !pattern.test(val)){
+    console.error("Invalid EMAIL format")
+    return res.status(500).send('Invalid Email Format');
   }
   const up_sql_query=`UPDATE test SET ${col_name}=? WHERE ID=?`
-  db.query(up_sql_query, [val, id], (err, result)=>{
+  db.query(up_sql_query, [val, id], (err)=>{
     if(err){
       console.error("there was an error", err)
     }
