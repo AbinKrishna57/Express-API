@@ -27,7 +27,7 @@ del_router.post("/delete/delete-user", (req, res)=>{
     if(err){
       console.error("there was an error", err)
     }
-    res.redirect("/data")
+    res.redirect("/all-data")
   })
 })
 

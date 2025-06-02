@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Search</title>
+  <style>
+    html{
+      background-color: rgb(74, 74, 74);
+      color: white;
+    }
+    input{
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h2>Search Users</h2>
+  <input type="text" id="searchInput" placeholder="Search..." />
+  <ul id="results"></ul>
+
+  <script>
+    let users = [];
+
+    fetch("/all-data")
+      .then(res => res.json())
+      .then(data => {
+        users = data;
+        showResults(users);
+      });
+
+    const searchInput = document.getElementById("searchInput");
+    const resultsList = document.getElementById("results");
+
+    searchInput.addEventListener("input", () => {
+      const query = searchInput.value.toLowerCase();
+      const filtered = users.filter(user =>
+        Object.values(user).some(val =>
+          String(val).toLowerCase().includes(query)
+        )
+      );
+      showResults(filtered);
+    });
+
+    function showResults(data) {
+      resultsList.innerHTML = "";
+      data.forEach(user => {
+        const li = document.createElement("li");
+        li.textContent = `Name: ${user.First_Name} ${user.Last_Name} || Email: ${user.email} || Ph: ${user.Phone_Number} || Addr: ${user.Address}`;
+        resultsList.appendChild(li);
+      });
+    }
+  </script>
+</body>
+</html>

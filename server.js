@@ -1,6 +1,7 @@
 const express=require("express")
 const mysql=require("mysql2")
 const bodyParser=require("body-parser")
+const path=require("path")
 const app=express()
 
 app.set("view engine", "ejs")
@@ -10,8 +11,10 @@ app.use(bodyParser.urlencoded({extended: false}))
 
 const deleteRouter=require("./router/delete")
 const updateRouter=require("./router/update")
+const allDataRouter=require("./router/all_data")
 app.use(updateRouter)
 app.use(deleteRouter)
+app.use(allDataRouter)
 
 const db=mysql.createConnection({
   host: 'localhost',
@@ -31,13 +34,12 @@ app.get("/", (req, res)=>{
   res.render("index.html")
 })
 
-app.get("/data", (req, res, next)=>{
-  db.query("SELECT * FROM test", (err, result)=>{
-    if(err){
-      console.error("There was an error", err)
-    }
-    res.json(result)
-  })
+app.get("/all-data", (req, res)=>{
+  res.render("all_data")
+})
+
+app.get("/search", (req, res)=>{
+  res.sendFile(path.join(__dirname, "public", "search.html"))
 })
 
 app.get("/add", (req, res)=>{
@@ -64,5 +66,3 @@ app.post("/new-user", (req, res)=>{
 app.listen(3000, ()=>{
   console.log(`Listening at port 3000`)
 })
-
-module.exports={db}

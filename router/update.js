@@ -13,7 +13,7 @@ db.connect((err)=>{
   if(err){
     console.error("Connection Error", err)
   }
-  console.log("Connected To the Server through router")
+  console.log("Connected To the Server through update_router")
 })
 
 up_router.get("/update", (req, res)=>{
@@ -22,7 +22,7 @@ up_router.get("/update", (req, res)=>{
 
 up_router.post("/update/update-user", (req, res)=>{
   const {id, col_name, val}=req.body
-  const col_names=["First_Name", "Last_Name", "Phone_Number", "Address"]
+  const col_names=["First_Name", "Last_Name", "Phone_Number", "Address", "email"]
   if(!col_names.includes(col_name)){
     console.error("Invalid Column Name")
   }
@@ -31,7 +31,7 @@ up_router.post("/update/update-user", (req, res)=>{
     if(err){
       console.error("there was an error", err)
     }
-    res.redirect("/data")
+    res.redirect("/all-data")
   })
 })
 
