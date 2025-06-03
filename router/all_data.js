@@ -11,7 +11,7 @@ const db=mysql.createConnection({
 
 db.connect((err)=>{
   if(err){
-    console.error("There was an error", err)
+    return res.status(500).send("Connection Error", err)
   }
   console.log("Connected To the Server through all_data")
 })
@@ -19,7 +19,7 @@ db.connect((err)=>{
 all_data.get("/all-data", (req, res) => {
   db.query("SELECT * FROM test", (err, results) => {
     if(err){
-      console.error("There was an error", err);
+      return res.status(500).send("Query Error", err)
     }
 
     res.json(results)

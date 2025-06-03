@@ -11,7 +11,7 @@ const db=mysql.createConnection({
 
 db.connect((err)=>{
   if(err){
-    console.error("Connection Error", err)
+    return res.status(500).send("Connection Error", err)
   }
   console.log("Connected To the Server through del_router")
 })
@@ -25,7 +25,7 @@ del_router.post("/delete/delete-user", (req, res)=>{
   const sql_del_query="DELETE FROM test WHERE ID=?"
   db.query(sql_del_query, [userid], (err, result)=>{
     if(err){
-      console.error("there was an error", err)
+      return res.status(500).send("Query Error", err)
     }
     res.redirect("/all-data")
   })

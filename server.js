@@ -25,7 +25,7 @@ const db=mysql.createConnection({
 
 db.connect((err)=>{
   if(err){
-    console.error("Connection Error", err)
+    return res.status(500).send("Connection Error", err)
   }
   console.log("Connected To the Server")
 })
@@ -52,12 +52,12 @@ app.post("/new-user", (req, res)=>{
   const sql_query=("INSERT INTO test(First_Name, Last_Name, Phone_Number, Address, email) VALUES (?, ?, ?, ?, ?)")
   db.query(sql_query, [fname, lname, phn, addr, email], (err, result)=>{
     if(err){
-      console.error("There was an error", err)
+      return res.status(500).send("Query Error", err)
     }
   })
   db.query("SELECT * FROM test", (err, results)=>{
     if(err){
-      console.error("There was an error", err)
+      return res.status(500).send("Query Error", err)
     }
     res.json(results)
   })

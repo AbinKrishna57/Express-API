@@ -28,13 +28,12 @@ up_router.post("/update/update-user", (req, res)=>{
   }
   const pattern=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if(col_name==="email" && !pattern.test(val)){
-    console.error("Invalid EMAIL format")
     return res.status(500).send('Invalid Email Format');
   }
   const up_sql_query=`UPDATE test SET ${col_name}=? WHERE ID=?`
   db.query(up_sql_query, [val, id], (err)=>{
     if(err){
-      console.error("there was an error", err)
+      return res.status(500).send("Query Error", err)
     }
     res.redirect("/all-data")
   })
