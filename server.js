@@ -19,7 +19,7 @@ app.use(allDataRouter)
 const db=mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: 'Server###Beast69#',
+  password: '<password>',
   database: 'Exp'
 })
 
